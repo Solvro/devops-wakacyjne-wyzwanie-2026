@@ -30,3 +30,9 @@ Instalacja Linuxa w maszynie wirtualnej na Windowsie, bądź korzystanie z WSL n
 ## Wykłady
 
 TBA
+
+## Licencja
+
+Zawartość niniejszego repozytorium jest dostępna na licencji [CC BY-NC 4.0](/LICENSE.txt).
+
+© Konrad Szczepaniak 2026
