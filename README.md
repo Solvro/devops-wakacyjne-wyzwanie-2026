@@ -17,6 +17,8 @@ Oprócz tego wymagany będzie komputer z zainstalowanym systemem Linux **bezpoś
 Zalecana instalacja na dedykowanym dysku. Dual-boot na jednym dysku akceptowalny, ale odradzany.
 Instalacja Linuxa w maszynie wirtualnej na Windowsie, bądź korzystanie z WSL nie wystarczy do wykonania wszystkich zadań.
 
+Dystrybucja powinna być w miarę aktualna - dla początkujących polecam debian 13, dla zaawansowanych arch linux.
+
 ## Uczestnictwo
 
 - Kurs składa się z 7 cotygodniowych wykładów.
