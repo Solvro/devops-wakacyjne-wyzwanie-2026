@@ -31,7 +31,15 @@ Dystrybucja powinna być w miarę aktualna - dla początkujących polecam debian
 
 ## Wykłady
 
-TBA
+| L.p. | Temat                                           | Prezentacja | Lista zadań | Nagranie |
+| ---- | ----------------------------------------------- | ----------- | ----------- | -------- |
+| 1    | Podstawy sieci                                  | TBA         | TBA         | TBA      |
+| 2    | Firewall i Policy-based routing                 | TBA         | TBA         | TBA      |
+| 3    | Wirtualizacja i konfiguracja maszyny wirtualnej | TBA         | TBA         | TBA      |
+| 4    | Wprowadzenie do konteneryzacji                  | TBA         | TBA         | TBA      |
+| 5    | "Bardziej zaawansowana" konteneryzacja          | TBA         | TBA         | TBA      |
+| 6    | Monitoring: Grafana i Prometheus                | TBA         | TBA         | TBA      |
+| 7    | Konfiguracja VPN: Wireguard                     | TBA         | TBA         | TBA      |
 
 ## Licencja
 
