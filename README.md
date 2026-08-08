@@ -31,15 +31,15 @@ Dystrybucja powinna być w miarę aktualna - dla początkujących polecam debian
 
 ## Wykłady
 
-| L.p. | Temat                                           | Prezentacja                                | Lista zadań                                | Nagranie |
-| ---- | ----------------------------------------------- | ------------------------------------------ | ------------------------------------------ | -------- |
-| 1    | Podstawy sieci                                  | [Prezentacja](./wykład%201/wykład%201.pdf) | [Lista zadań](./wykład%201/lista_zadan.md) | TBA      |
-| 2    | Firewall i Policy-based routing                 | TBA                                        | TBA                                        | TBA      |
-| 3    | Wirtualizacja i konfiguracja maszyny wirtualnej | TBA                                        | TBA                                        | TBA      |
-| 4    | Wprowadzenie do konteneryzacji                  | TBA                                        | TBA                                        | TBA      |
-| 5    | "Bardziej zaawansowana" konteneryzacja          | TBA                                        | TBA                                        | TBA      |
-| 6    | Monitoring: Grafana i Prometheus                | TBA                                        | TBA                                        | TBA      |
-| 7    | Konfiguracja VPN: Wireguard                     | TBA                                        | TBA                                        | TBA      |
+| L.p. | Temat                                           | Prezentacja                                | Lista zadań                                | Nagranie                                                       |
+| ---- | ----------------------------------------------- | ------------------------------------------ | ------------------------------------------ | -------------------------------------------------------------- |
+| 1    | Podstawy sieci                                  | [Prezentacja](./wykład%201/wykład%201.pdf) | [Lista zadań](./wykład%201/lista_zadan.md) | [Nagranie](https://cloud.ovh1.minibomba.pro/s/CeMKqMmP329LBis) |
+| 2    | Firewall i Policy-based routing                 | TBA                                        | TBA                                        | TBA                                                            |
+| 3    | Wirtualizacja i konfiguracja maszyny wirtualnej | TBA                                        | TBA                                        | TBA                                                            |
+| 4    | Wprowadzenie do konteneryzacji                  | TBA                                        | TBA                                        | TBA                                                            |
+| 5    | "Bardziej zaawansowana" konteneryzacja          | TBA                                        | TBA                                        | TBA                                                            |
+| 6    | Monitoring: Grafana i Prometheus                | TBA                                        | TBA                                        | TBA                                                            |
+| 7    | Konfiguracja VPN: Wireguard                     | TBA                                        | TBA                                        | TBA                                                            |
 
 ## Licencja
 
