@@ -58,7 +58,7 @@ Dla każdej podsieci zapisz proponowane adresy sieci, maski podsieci (w formacie
 
 - Z wygenerowanego zakresu IPv6 wydziel dwie sieci /64
 - Przypisz adresy z tych sieci interfejsom `r1`
-- Zaobserwuj adresy i tabelę routingu w pozostałych przestrzeniach
+- Zaobserwuj adresy i tablicę routingu w pozostałych przestrzeniach
   - protip: `ip -6 route` by pokazać tablicę routingu ipv6
   - protip2: `ip -6 route show table local` by pokazać tablicę wpisów specjalnych ipv6
 - Przetestuj poleceniem `ping`
