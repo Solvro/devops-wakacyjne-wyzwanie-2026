@@ -58,10 +58,16 @@ Dla każdej podsieci zapisz proponowane adresy sieci, maski podsieci (w formacie
 
 - Z wygenerowanego zakresu IPv6 wydziel dwie sieci /64
 - Przypisz adresy z tych sieci interfejsom `r1`
+- Rozgłoś dostępność adresacji IPv6:
+  - Zainstaluj na systemie program `radvd` (z repozytoriów)
+  - Skopiuj i zmodyfikuj plik konfiguracyjny [`tools/radvd.conf`](../tools/radvd.conf)
+    - utwórz blok `interface` dla obu interfejsów przestrzeni routera, zmieniając odpowiednio nazwę interfejsu w pliku konfiguracyjnym tak, by pasowała do faktycznych
+  - W nowym oknie terminala, po wejściu do przestrzeni `r1` uruchom program komendą `radvd -n -p "/run/radvd.$(hostname).pid" -C <ścieżka do pliku>`
 - Zaobserwuj adresy i tablicę routingu w pozostałych przestrzeniach
   - protip: `ip -6 route` by pokazać tablicę routingu ipv6
   - protip2: `ip -6 route show table local` by pokazać tablicę wpisów specjalnych ipv6
 - Przetestuj poleceniem `ping`
+- Zatrzymaj program `radvd` poprzez CTRL+C i zaobserwuj zmiany w tablicy routingu w pozostałych przestrzeniach
 
 ## Zadanie 6 - Router za routerem
 
@@ -73,6 +79,8 @@ Dla każdej podsieci zapisz proponowane adresy sieci, maski podsieci (w formacie
 - Adresy na połączeniu `r1`-`r2`
 - Ustaw trasy na `r1` i `r2` tak, by można było przesyłać dane z `pc1` do `pc3` po IPv4
   - protip: `ip route {show,add,delete}`
+- Utwórz dwa pliki konfiguracyjne `radvd.conf` dla przestrzeni `r1` i `r2`
+  - Uruchom `radvd` w obu przestrzeniach (w osobnym terminalu)
 - Ustaw trasy na `r1` i `r2` tak, by działało również połączenie po IPv6
   - protip: `ip -6 route {show,add,delete}`
   - protip2: gdy włączasz interfejs, linux automatycznie generuje adres link-local IPv6 - jest on ważny tylko w danej sieci lokalnej, ale nadal możesz go ustawić jako adres następnego routera, pod warunkiem że w regule podasz również nazwę interfejsu
