@@ -51,6 +51,15 @@ Dla każdej podsieci zapisz proponowane adresy sieci, maski podsieci (w formacie
 - Przypisz odpowiednie adresy
   - Połączenie `pc3`-`r1` traktuj jako osobną sieć
 - Włącz routing w `r1`
+  - jeżeli jesteś na debianie i `sysctl` wydaje się nie istnieć na systemie:
+    - debian przydziela różne wartości zmiennej `PATH` rootowi i innym użytkownikom
+      - `PATH` decyduje, gdzie system szuka pliku wykonywalnego dla danej komendy - są to ścieżki do katalogów rozdzielone dwukropkami
+      - jeżeli w wyjściu z `echo $PATH` nie znajdziesz `/usr/sbin` lub `/sbin`, to ten problem dotyczy Ciebie
+    - upewnij się, że odpowiednio "wchodzisz" na konto root: za pomocą `sudo -i` lub `su -l`
+      - samo `su` nie wczytuje ponownie pliku `/etc/profile`
+    - wpis do `PATH` można dodać doraźnie za pomocą `export PATH="$PATH:/usr/sbin"`
+      - alternatywnie możesz wywoływać `sysctl` za pomocą pełnej ścieżki (`/sbin/sysctl` zamiast `sysctl`)
+    - możesz również permanentnie dodać `/sbin` lub `/usr/sbin` dla pozostałych użytkowników edytując plik `/etc/profile`, a następnie się wylogować i ponownie zalogować do systemu
 - Utwórz wpisy tras domyślnych w `pc*` i `s1`
 - Przetestuj łączność poleceniem `ping`.
 
