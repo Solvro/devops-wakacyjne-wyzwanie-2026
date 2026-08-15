@@ -66,14 +66,17 @@ namespace_setup() {
 
 mount_namespace_setup() {
   set +euo pipefail
-  mkdir -p "/run/mountns_overlays/$1/"{upper,work}
-  mount -t overlay overlay /etc -o lowerdir=/etc,upperdir="/run/mountns_overlays/$1/upper",workdir="/run/mountns_overlays/$1/work"
-  ok "Redirected changes in /etc to /run/mountns_overlays/$1/upper in the namespace"
-  mkdir -p "/run/dhcpcd" "/var/lib/dhcpcd" "/var/lib/dhcp"
+  mkdir -p "/run/mountns_overlays/$1/"{etc,var}/{upper,work}
+  mount -t overlay overlay /etc -o lowerdir=/etc,upperdir="/run/mountns_overlays/$1/etc/upper",workdir="/run/mountns_overlays/$1/etc/work"
+  ok "Redirected changes in /etc to /run/mountns_overlays/$1/etc/upper in the namespace"
+  mount -t overlay overlay /var -o lowerdir=/var,upperdir="/run/mountns_overlays/$1/var/upper",workdir="/run/mountns_overlays/$1/var/work"
+  ok "Redirected changes in /var to /run/mountns_overlays/$1/var/upper in the namespace"
+  mkdir -p "/run/dhcpcd" "/var/lib/dhcpcd" "/var/lib/dhcp" "/var/lib/misc"
   mount -t tmpfs tmpfs /run/dhcpcd
   mount -t tmpfs tmpfs /var/lib/dhcpcd
   mount -t tmpfs tmpfs /var/lib/dhcp
-  ok "Mounted private tmpfs on /run/dhcpcd, /var/lib/dhcpcd and /var/lib/dhcp"
+  mount -t tmpfs tmpfs /var/lib/misc
+  ok "Mounted private tmpfs on /run/dhcpcd, /var/lib/dhcpcd, /var/lib/dhcp and /var/lib/misc"
   mount --bind /run/systemd /run/systemd -o ro
   ok "Made /run/systemd read-only"
   mount --bind /usr /usr -o ro
