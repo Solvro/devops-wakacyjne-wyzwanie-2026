@@ -47,6 +47,7 @@ $0 list - list all active network namespaces
 $0 create <name> - create a new network namespace
 $0 delete <name> - delete a network namespace
 $0 enter <name> - spawn a new shell in a network namespace
+$0 run <command> [arguments]... - run a command in a network namespace
 EOF
 }
 
@@ -86,7 +87,7 @@ cmd_create() {
   ok "Namespace '$1' created! Enter with '$0 enter $1'"
 }
 
-cmd_enter() {
+ensure_ns_exists() {
   if [[ -z "$1" ]]
   then
     fail "Missing required parameter: new network namespace name"
@@ -107,9 +108,21 @@ cmd_enter() {
     touch "/run/mountns/$1"
     unshare --mount="/run/mountns/$1" --propagation slave bash -c 'mount_namespace_setup $1' 'mount_namespace_setup' "$1"
   fi
+}
+
+cmd_enter() {
+  ensure_ns_exists "$1"
   info "Entering network namespace '$1'"
   nsenter --net="/run/netns/$1" --uts="/run/utsns/$1" --mount="/run/mountns/$1" ${SHELL:-bash}
   info "Exiting network namespace '$1'"
+}
+
+cmd_run() {
+  NSNAME="$1"
+  shift
+  ensure_ns_exists "$NSNAME"
+  info "Running '$@' in network namespace '$NSNAME'"
+  nsenter --net="/run/netns/$NSNAME" --uts="/run/utsns/$NSNAME" --mount="/run/mountns/$NSNAME" "$@"
 }
 
 cmd_delete() {
@@ -164,7 +177,9 @@ then
   mount tmpfs /run/mountns -t tmpfs -o private
 fi
 
-case $1 in
+CMD="$1"
+shift
+case $CMD in
   "" | help)
     cmd_help
   ;;
@@ -172,13 +187,16 @@ case $1 in
     cmd_list
   ;;
   create | new)
-    cmd_create $2
+    cmd_create $1
   ;;
   delete | remove | rm)
-    cmd_delete $2
+    cmd_delete $1
   ;;
   enter)
-    cmd_enter $2
+    cmd_enter $1
+  ;;
+  run)
+    cmd_run "$@"
   ;;
   *)
     fail "Unknown subcommand; run '$0 help' for help"
