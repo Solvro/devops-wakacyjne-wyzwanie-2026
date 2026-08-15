@@ -69,6 +69,9 @@ mount_namespace_setup() {
   mkdir -p "/run/mountns_overlays/$1/"{upper,work}
   mount -t overlay overlay /etc -o lowerdir=/etc,upperdir="/run/mountns_overlays/$1/upper",workdir="/run/mountns_overlays/$1/work"
   ok "Redirected changes in /etc to /run/mountns_overlays/$1/upper in the namespace"
+  mkdir -p "/run/dhcpcd"
+  mount -t tmpfs tmpfs /run/dhcpcd
+  ok "Mounted private tmpfs on /run/dhcpcd"
 }
 export -f mount_namespace_setup
 export -f namespace_setup
