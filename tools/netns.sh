@@ -72,6 +72,13 @@ mount_namespace_setup() {
   mkdir -p "/run/dhcpcd"
   mount -t tmpfs tmpfs /run/dhcpcd
   ok "Mounted private tmpfs on /run/dhcpcd"
+  mount --bind /run/systemd /run/systemd -o ro
+  ok "Made /run/systemd read-only"
+  if [[ -L "/etc/resolv.conf" ]]
+  then
+    cp /etc/resolv.conf /etc/resolv.conf.new && mv /etc/resolv.conf.new /etc/resolv.conf
+    ok "Converted /etc/resolv.conf to a standard file in the namespace"
+  fi
 }
 export -f mount_namespace_setup
 export -f namespace_setup
