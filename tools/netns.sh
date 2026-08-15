@@ -17,6 +17,8 @@ TAG_WARNING="${COLOR_GRAY}[${COLOR_YELLOW}WARNING${COLOR_GRAY}]${COLOR_RESET}"
 TAG_OK="${COLOR_GRAY}[${COLOR_GREEN}OK${COLOR_GRAY}]${COLOR_RESET}"
 TAG_INFO="${COLOR_GRAY}[${COLOR_BLUE}INFO${COLOR_GRAY}]${COLOR_RESET}"
 
+export COLOR_{RESET,RED,GREEN,YELLOW,BLUE,GRAY} TAG_{INFO,WARNING,OK,ERROR}
+
 fail() {
   echo "$TAG_ERROR $@" >&2;
   exit 1
@@ -33,6 +35,8 @@ ok() {
 warning() {
   echo "$TAG_WARNING $@" >&2;
 }
+
+export -f fail info ok warning
 
 cmd_help() {
   cat >&2 <<EOF
@@ -51,6 +55,23 @@ cmd_list() {
   ls -1 /run/netns
 }
 
+namespace_setup() {
+  set +euo pipefail
+  info "Namespace created, confgiuring"
+  hostname "$1"
+  ok "Hostname configured"
+  mount_namespace_setup "$1"
+}
+
+mount_namespace_setup() {
+  set +euo pipefail
+  mkdir -p "/run/mountns_overlays/$1/"{upper,work}
+  mount -t overlay overlay /etc -o lowerdir=/etc,upperdir="/run/mountns_overlays/$1/upper",workdir="/run/mountns_overlays/$1/work"
+  ok "Redirected changes in /etc to /run/mountns_overlays/$1/upper in the namespace"
+}
+export -f mount_namespace_setup
+export -f namespace_setup
+
 cmd_create() {
   if [[ -z "$1" ]]
   then
@@ -60,8 +81,8 @@ cmd_create() {
   then
     fail "Network namespace '$1' already exists!"
   fi
-  touch "/run/"{net,uts}ns"/$1"
-  unshare --net="/run/netns/$1" --uts="/run/utsns/$1" hostname "$1"
+  touch "/run/"{net,uts,mount}ns"/$1"
+  unshare --net="/run/netns/$1" --uts="/run/utsns/$1" --mount="/run/mountns/$1" --propagation slave bash -c 'namespace_setup "$1"' 'namespace_setup' "$1"
   ok "Namespace '$1' created! Enter with '$0 enter $1'"
 }
 
@@ -80,8 +101,14 @@ cmd_enter() {
     touch "/run/utsns/$1"
     unshare --uts="/run/utsns/$1" hostname "$1"
   fi
+  if [[ ! -e "/run/mountns/$1" ]]
+  then
+    warning "Mount namespace for network namespace '$1' does not exist, creating"
+    touch "/run/mountns/$1"
+    unshare --mount="/run/mountns/$1" --propagation slave bash -c 'mount_namespace_setup $1' 'mount_namespace_setup' "$1"
+  fi
   info "Entering network namespace '$1'"
-  nsenter --net="/run/netns/$1" --uts="/run/utsns/$1" ${SHELL:-bash}
+  nsenter --net="/run/netns/$1" --uts="/run/utsns/$1" --mount="/run/mountns/$1" ${SHELL:-bash}
   info "Exiting network namespace '$1'"
 }
 
@@ -90,7 +117,7 @@ cmd_delete() {
   then
     fail "Missing required parameter: new network namespace name"
   fi
-  if [[ ! -e "/run/netns/$1" && ! -e "/run/utsns/$1" ]]
+  if [[ ! -e "/run/netns/$1" && ! -e "/run/utsns/$1" && ! -e "/run/mountns/$1" && ! -e "/run/mountns_overlays/$1" ]]
   then
     fail "Network namespace '$1' does not exist!"
   fi
@@ -106,6 +133,17 @@ cmd_delete() {
     umount "/run/utsns/$1" || true
     rm "/run/utsns/$1" && ok "UTS namespace for network namespace '$1' removed!" || true
   fi
+  if [[ -e "/run/mountns/$1" ]]
+  then
+    info "Removing mount namespace for network namespace '$1'"
+    umount "/run/mountns/$1" || true
+    rm "/run/mountns/$1" && ok "Mount namespace for network namespace '$1' removed!" || true
+  fi
+  if [[ -e "/run/mountns_overlays/$1" ]]
+  then
+    info "Removing config file overrides for network namespace '$1'"
+    rm -rf "/run/mountns_overlays/$1" && ok "Config file overrides for network namespace '$1' removed!" || true
+  fi
 }
 
 if [[ $EUID -ne "0" ]]
@@ -113,7 +151,19 @@ then
   fail "This command must be run as root!"
 fi
 
-mkdir -p /run/netns /run/utsns
+if [[ "`stat -Lc %i /proc/self/ns/net`" -ne "`stat -Lc %i /proc/1/ns/net`" ]]
+then
+  fail "You cannot manage namespaces from another network namespace"
+fi
+
+mkdir -p /run/netns /run/utsns /run/mountns_overlays
+
+if [[ ! -d "/run/mountns" ]]
+then
+  mkdir /run/mountns
+  mount tmpfs /run/mountns -t tmpfs -o private
+fi
+
 case $1 in
   "" | help)
     cmd_help
