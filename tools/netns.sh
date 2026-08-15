@@ -74,10 +74,17 @@ mount_namespace_setup() {
   ok "Mounted private tmpfs on /run/dhcpcd"
   mount --bind /run/systemd /run/systemd -o ro
   ok "Made /run/systemd read-only"
+  mount --bind /usr /usr -o ro
+  ok "Made /usr read-only"
   if [[ -L "/etc/resolv.conf" ]]
   then
     cp /etc/resolv.conf /etc/resolv.conf.new && mv /etc/resolv.conf.new /etc/resolv.conf
     ok "Converted /etc/resolv.conf to a standard file in the namespace"
+  fi
+  if grep "resolve" /etc/nsswitch.conf > /dev/null
+  then
+    sed -e 's/ resolve \[!UNAVAIL=return\]//' /etc/nsswitch.conf
+    ok "Disabled systemd-resolved in namespace's /etc/nsswitch.conf"
   fi
 }
 export -f mount_namespace_setup
