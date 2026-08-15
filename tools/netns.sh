@@ -69,9 +69,11 @@ mount_namespace_setup() {
   mkdir -p "/run/mountns_overlays/$1/"{upper,work}
   mount -t overlay overlay /etc -o lowerdir=/etc,upperdir="/run/mountns_overlays/$1/upper",workdir="/run/mountns_overlays/$1/work"
   ok "Redirected changes in /etc to /run/mountns_overlays/$1/upper in the namespace"
-  mkdir -p "/run/dhcpcd"
+  mkdir -p "/run/dhcpcd" "/var/lib/dhcpcd" "/var/lib/dhcp"
   mount -t tmpfs tmpfs /run/dhcpcd
-  ok "Mounted private tmpfs on /run/dhcpcd"
+  mount -t tmpfs tmpfs /var/lib/dhcpcd
+  mount -t tmpfs tmpfs /var/lib/dhcp
+  ok "Mounted private tmpfs on /run/dhcpcd, /var/lib/dhcpcd and /var/lib/dhcp"
   mount --bind /run/systemd /run/systemd -o ro
   ok "Made /run/systemd read-only"
   mount --bind /usr /usr -o ro
@@ -83,7 +85,7 @@ mount_namespace_setup() {
   fi
   if grep "resolve" /etc/nsswitch.conf > /dev/null
   then
-    sed -e 's/ resolve \[!UNAVAIL=return\]//' /etc/nsswitch.conf
+    sed -ie 's/ resolve \[!UNAVAIL=return\]//' /etc/nsswitch.conf
     ok "Disabled systemd-resolved in namespace's /etc/nsswitch.conf"
   fi
 }
