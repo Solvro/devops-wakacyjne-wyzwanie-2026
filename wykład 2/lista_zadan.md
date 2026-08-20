@@ -55,6 +55,8 @@ Opisz przebieg automatycznej konfiguracji z perspektywy pakietów przechwyconych
 
 > [!TIP]
 > Wiresharka możesz uruchomić komendą `sudo ./tools/netns.sh run <nazwa przestrzeni> wireshark`
+>
+> Jeżeli ta komenda nie zadziała, możesz również użyć komendy `sudo ./tools/netns.sh wireshark <nazwa przestrzeni> [nazwa interfejsu]`
 
 ## Zadanie 3 - Autokonfiguracja IPv6, Stateful DHCP
 

@@ -47,7 +47,8 @@ $0 list - list all active network namespaces
 $0 create <name> - create a new network namespace
 $0 delete <name> - delete a network namespace
 $0 enter <name> - spawn a new shell in a network namespace
-$0 run <command> [arguments]... - run a command in a network namespace
+$0 run <name> <command> [arguments]... - run a command in a network namespace
+$0 wireshark <name> [interface] - start a live wireshark packet capture from the network namespace
 EOF
 }
 
@@ -147,6 +148,14 @@ cmd_run() {
   nsenter --net="/run/netns/$NSNAME" --uts="/run/utsns/$NSNAME" --mount="/run/mountns/$NSNAME" "$@"
 }
 
+cmd_wireshark() {
+  NSNAME="$1"
+  IFACE="${2:-any}"
+  ensure_ns_exists "$1"
+  info "Starting packet capture in network namespace '$1' on interface '$IFACE'"
+  nsenter --net="/run/netns/$1" --uts="/run/utsns/$1" --mount="/run/mountns/$1" tcpdump -Uw - -i "$IFACE" | wireshark -ki -
+}
+
 cmd_delete() {
   if [[ -z "$1" ]]
   then
@@ -219,6 +228,9 @@ case $CMD in
   ;;
   run)
     cmd_run "$@"
+  ;;
+  wireshark)
+    cmd_wireshark "$@"
   ;;
   *)
     fail "Unknown subcommand; run '$0 help' for help"
