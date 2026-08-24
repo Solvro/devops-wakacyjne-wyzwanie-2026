@@ -33,6 +33,14 @@ Pobierz najnowszy instalator debiana ze strony dystrybucji. (bonusowe punkty za 
 Utwórz nową maszynę wirtualną, wybierając instalację systemu za pomocą pobranego instalatora.
 Zmodyfikuj maszynę wirtualną przed pierwszym uruchomieniem tak, by używała UEFI zamiast BIOS.
 
+> [!IMPORTANT]
+> Korekta informacji z wykładu: jeżeli wirtualizator zainstalowany jest na debianie, w polu "Oprogramowanie sprzętowe" zamiast opcji "UEFI" koniecznie wybierz opcję "**UEFI x86_64: /usr/share/OVMF/OVMF_CODE_4M.fd**"!
+>
+> Opcja "UEFI" na debianie domyślnie spowoduje włączenie opcji Secure Boot w UEFI maszyny wirtualnej, co utrudni ci wykonanie zadania 3.
+>
+> Opcję tą można tylko zmienić przed pierwszym uruchomieniem maszyny wirtualnej.
+> Nie musisz jednak resetować maszyny wirtualnej, by wyłączyć Secure Boot - procedurę opisano w korekcie do zadania 3.
+
 Uruchom maszynę wirtualną i zainstaluj system.
 Podczas instalacji zainstaluj jedynie podstawowe narzedzia i serwer SSH.
 Manualnie rozpartycjonuj dysk:
@@ -78,6 +86,13 @@ Uruchom ponownie maszynę wirtualną, uruchamiając system z pobranego obrazu.
 >
 > W mojej opinii tryb rescue debiana jest po prostu trudniejszy w obsłudze niż zwykły instalator Arch Linux,
 > który w swoim środowisku ma wiele narzędzi gotowych do naprawy systemu operacyjnego.
+
+> [!TIP]
+> Korekta 24-08-2026: Instalator nie chce się uruchomić, a na ekranie wyświetla się monit o niepowodzonym rozruchu z błędem "Access denied"?
+>
+> Najprawdopodobniej w twojej maszynie wirtualnej włączony jest Secure Boot.
+> By tą opcję wyłączyć, wejdź do konfiguracji UEFI maszyny wirtualnej, przejdź do menu "Device Manager", dalej "Secure Boot Configuration", a tam wyłącz opcję Secure Boot.
+> Zapisz zmiany klawiszem F10.
 
 Po uruchomieniu upewnij się, że wszystkie obiekty LVM utworzone na debianie są nadal widoczne.
 Zamontuj wolumen logiczny katalogu `/` w `/mnt`.
