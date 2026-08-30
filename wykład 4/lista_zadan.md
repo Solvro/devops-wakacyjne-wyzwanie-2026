@@ -249,12 +249,11 @@ Porównaj informacje o właścicielu i uprawnieniach z poziomu obu kontenerów i
 
 W wybranej maszynie wirtualnej (docker lub podman) utwórz nowy kontener z interaktywnym shellem.
 
-Utwórz nowy plik w katalogu `/root`. Ustaw jego uprawnienia na `000`. Spróbuj go odczytać jako `root`
+W kontenerze utwórz nowy plik w katalogu `/root`. Ustaw jego uprawnienia na `000`. Spróbuj go odczytać jako `root`
 
 Zainstaluj pakiety `iproute2` i `iptables`.
 Spróbuj w kontenerze utworzyć nowy interfejs, zmienić adresację interfejsów, odczytać reguły firewalla i dodać nową regułę firewalla.
 
 Usuń poprzedni kontener i utwórz nowy, dodając mu capability `NET_ADMIN` i jednocześnie usuwając capability `DAC_OVERRIDE`.
 
-Zainstaluj pakiety `iproute2` i `iptables`.
-Ponownie spróbuj utworzyć nowy interfejs, zmienić adresację interfejsów, odczytać reguły firewalla i dodać nową regułę firewalla.
+Powtórz kroki z poprzedniego kontenera.
