@@ -37,7 +37,7 @@ Dystrybucja powinna być w miarę aktualna - dla początkujących polecam debian
 | 2    | Firewall i Policy-based routing                 | [Prezentacja](./wykład%202/wykład%202.pdf) | [Lista zadań](./wykład%202/lista_zadan.md) | [Nagranie](https://wakacyjne-wyzwanie-2026.s3w.minibomba.pro/wyklad2.mp4) |
 | 3    | Wirtualizacja i konfiguracja maszyny wirtualnej | [Prezentacja](./wykład%203/wykład%203.pdf) | [Lista zadań](./wykład%203/lista_zadan.md) | [Nagranie](https://wakacyjne-wyzwanie-2026.s3w.minibomba.pro/wyklad3.mp4) |
 | 4    | Wprowadzenie do konteneryzacji                  | [Prezentacja](./wykład%204/wykład%204.pdf) | [Lista zadań](./wykład%204/lista_zadan.md) | [Nagranie](https://wakacyjne-wyzwanie-2026.s3w.minibomba.pro/wyklad4.mp4) |
-| 5    | "Bardziej zaawansowana" konteneryzacja          | TBA                                        | TBA                                        | TBA                                                                       |
+| 5    | "Bardziej zaawansowana" konteneryzacja          | [Prezentacja](./wykład%205/wykład%205.pdf) | [Lista zadań](./wykład%205/lista_zadan.md) | [Nagranie](https://wakacyjne-wyzwanie-2026.s3w.minibomba.pro/wyklad5.mp4) |
 | 6    | Monitoring: Grafana i Prometheus                | TBA                                        | TBA                                        | TBA                                                                       |
 | 7    | Konfiguracja VPN: Wireguard                     | TBA                                        | TBA                                        | TBA                                                                       |
 
