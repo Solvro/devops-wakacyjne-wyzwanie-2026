@@ -38,7 +38,7 @@ Dystrybucja powinna być w miarę aktualna - dla początkujących polecam debian
 | 3    | Wirtualizacja i konfiguracja maszyny wirtualnej | [Prezentacja](./wykład%203/wykład%203.pdf) | [Lista zadań](./wykład%203/lista_zadan.md) | [Nagranie](https://wakacyjne-wyzwanie-2026.s3w.minibomba.pro/wyklad3.mp4) |
 | 4    | Wprowadzenie do konteneryzacji                  | [Prezentacja](./wykład%204/wykład%204.pdf) | [Lista zadań](./wykład%204/lista_zadan.md) | [Nagranie](https://wakacyjne-wyzwanie-2026.s3w.minibomba.pro/wyklad4.mp4) |
 | 5    | "Bardziej zaawansowana" konteneryzacja          | [Prezentacja](./wykład%205/wykład%205.pdf) | [Lista zadań](./wykład%205/lista_zadan.md) | [Nagranie](https://wakacyjne-wyzwanie-2026.s3w.minibomba.pro/wyklad5.mp4) |
-| 6    | Monitoring: Grafana i Prometheus                | TBA                                        | TBA                                        | TBA                                                                       |
+| 6    | Monitoring: Grafana i Prometheus                | [Prezentacja](./wykład%206/wykład%206.pdf) | [Lista zadań](./wykład%206/lista_zadan.md) | [Nagranie](https://wakacyjne-wyzwanie-2026.s3w.minibomba.pro/wyklad6.mp4) |
 | 7    | Konfiguracja VPN: Wireguard                     | TBA                                        | TBA                                        | TBA                                                                       |
 
 ## Licencja
